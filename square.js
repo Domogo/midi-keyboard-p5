@@ -2,7 +2,8 @@ import p5 from "p5";
 
 const NUM_OF_KEYS = 48;
 
-const COLOR_CHANGE_SPEED = 4;
+const COLOR_CHANGE_SPEED = 5;
+const RADIUS_SPEED = 15;
 
 const KEY_PRESSED = 148;
 const KEY_RELEASED = 132;
@@ -61,31 +62,31 @@ const sketch = (p) => {
     if (size === newSize) return;
 
     if (newSize >= size) {
-      size += 7;
+      size += 15;
     }
 
     if (newSize <= size) {
-      size -= 7;
+      size -= 15;
     }
   };
 
   const changeRadiusTL = () => {
     if (newRadiusTL >= radiusTL) {
-      radiusTL += 5;
+      radiusTL += RADIUS_SPEED;
     }
 
     if (newRadiusTL < radiusTL) {
-      radiusTL -= 5;
+      radiusTL -= RADIUS_SPEED;
     }
   };
 
   const changeRadiusTR = () => {
     if (newRadiusTR >= radiusTR) {
-      radiusTR += 5;
+      radiusTR += RADIUS_SPEED;
     }
 
     if (newRadiusTR < radiusTR) {
-      radiusTR -= 5;
+      radiusTR -= RADIUS_SPEED;
     }
   };
 
@@ -173,11 +174,7 @@ const sketch = (p) => {
     }
 
     if (mappedKey === CHANGE_COLOR_RED && mappedCommand === "noteOff") {
-      if (newRed - mappedVelocity < 0) {
-        newRed = 0;
-      } else {
-        newRed -= mappedVelocity;
-      }
+      newRed = 122;
     }
 
     if (mappedKey === CHANGE_COLOR_GREEN && mappedCommand === "noteOn") {
@@ -189,27 +186,19 @@ const sketch = (p) => {
     }
 
     if (mappedKey === CHANGE_COLOR_GREEN && mappedCommand === "noteOff") {
-      if (newGreen - mappedVelocity < 0) {
-        newGreen = 0;
-      } else {
-        newGreen -= mappedVelocity;
-      }
+      newGreen = 66;
     }
 
     if (mappedKey === CHANGE_COLOR_BLUE && mappedCommand === "noteOn") {
-      if (newBlue + mappedVelocity > 255) {
-        newBlue = 255;
-      } else {
-        newBlue += mappedVelocity;
-      }
-    }
-
-    if (mappedKey === CHANGE_COLOR_BLUE && mappedCommand === "noteOff") {
       if (newBlue - mappedVelocity < 0) {
         newBlue = 0;
       } else {
         newBlue -= mappedVelocity;
       }
+    }
+
+    if (mappedKey === CHANGE_COLOR_BLUE && mappedCommand === "noteOff") {
+      newBlue = 255;
     }
 
     if (mappedKey === CHANGE_RADIUS_TOP_LEFT && mappedCommand === "noteOn") {
