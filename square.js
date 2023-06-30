@@ -2,7 +2,7 @@ import p5 from "p5";
 
 const NUM_OF_KEYS = 48;
 
-const COLOR_CHANGE_SPEED = 2;
+const COLOR_CHANGE_SPEED = 4;
 
 const KEY_PRESSED = 148;
 const KEY_RELEASED = 132;
@@ -27,14 +27,14 @@ const sketch = (p) => {
   let radiusTR = 0;
   let newRadiusTR = 0;
 
-  let red = 0;
-  let newRed = 0;
+  let red = 122;
+  let newRed = 122;
 
-  let green = 0;
-  let newGreen = 0;
+  let green = 66;
+  let newGreen = 66;
 
-  let blue = 0;
-  let newBlue = 0;
+  let blue = 255;
+  let newBlue = 255;
 
   const mapKey = (key) => {
     const mapping = p.map(key, 36, 84, 1, NUM_OF_KEYS);
@@ -61,11 +61,11 @@ const sketch = (p) => {
     if (size === newSize) return;
 
     if (newSize >= size) {
-      size += 5;
+      size += 7;
     }
 
     if (newSize <= size) {
-      size -= 5;
+      size -= 7;
     }
   };
 
@@ -124,9 +124,7 @@ const sketch = (p) => {
   };
 
   p.draw = () => {
-    p.background("#131313");
-    p.noStroke();
-
+    p.background(255);
     changeSize();
     changeRadiusTL();
     changeRadiusTR();
@@ -135,9 +133,14 @@ const sketch = (p) => {
     changeGreen();
     changeBlue();
 
-    p.fill(red, green, blue);
+    p.noStroke();
     p.rectMode(p.CENTER);
-    p.square(300, 300, size, radiusTL, radiusTR, 0, 0);
+
+    p.fill(red, green, blue);
+    p.square(300, 300, size, radiusTL, radiusTR, radiusTL, radiusTR);
+
+    p.fill(blue, red, green);
+    p.square(600, 600, size, radiusTL, radiusTR, radiusTL, radiusTR);
   };
 
   window.addEventListener("midi-key-pressed", (input) => {
@@ -214,11 +217,7 @@ const sketch = (p) => {
     }
 
     if (mappedKey === CHANGE_RADIUS_TOP_LEFT && mappedCommand === "noteOff") {
-      if (newRadiusTL - mappedVelocity < 0) {
-        newRadiusTL = 0;
-      } else {
-        newRadiusTL -= mappedVelocity;
-      }
+      newRadiusTL = 0;
     }
 
     if (mappedKey === CHANGE_RADIUS_TOP_RIGHT && mappedCommand === "noteOn") {
@@ -226,11 +225,7 @@ const sketch = (p) => {
     }
 
     if (mappedKey === CHANGE_RADIUS_TOP_RIGHT && mappedCommand === "noteOff") {
-      if (newRadiusTR - mappedVelocity < 0) {
-        newRadiusTR = 0;
-      } else {
-        newRadiusTR -= mappedVelocity;
-      }
+      newRadiusTR = 0;
     }
   });
 };
